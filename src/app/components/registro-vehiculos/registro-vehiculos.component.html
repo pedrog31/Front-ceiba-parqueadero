@@ -1,0 +1,10 @@
+<mat-progress-bar *ngIf="cargando" color="accent" mode="query"> </mat-progress-bar>
+
+<form class="mat-form row center-sm" (submit)="consultar()">
+
+  <mat-form-field class="col-xs-12 col-sm-10">
+    <input matInput type="text" placeholder="Placa vehiculo">
+  </mat-form-field>
+
+  <button class="col-xs-12 col-sm-10" mat-raised-button color="primary" type="submit" [disabled]="cargando">Buscar</button>
+</form>
