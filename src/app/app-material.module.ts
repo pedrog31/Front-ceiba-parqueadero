@@ -6,6 +6,12 @@ import {
   MatProgressSpinnerModule,
   MatInputModule,
   MatButtonModule,
+  MatDialogModule,
+  MatGridListModule,
+  MatRadioModule,
+  MatSnackBarModule,
+  MatIconModule,
+  MatCardModule,
 } from '@angular/material';
 
 @NgModule({
@@ -16,6 +22,12 @@ import {
     MatProgressSpinnerModule,
     MatInputModule,
     MatButtonModule,
+    MatDialogModule,
+    MatGridListModule,
+    MatRadioModule,
+    MatSnackBarModule,
+    MatIconModule,
+    MatCardModule,
   ],
 })
 export class AppMaterialModule {

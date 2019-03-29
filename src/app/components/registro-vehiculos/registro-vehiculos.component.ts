@@ -1,5 +1,9 @@
 import { Component, OnInit } from '@angular/core';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
+import { VigilanteService } from 'src/app/services/vigilante/vigilante.service';
+import { ServicioParqueo } from 'src/app/modelo/ServicioParqueo';
+import {MatDialog} from '@angular/material';
+import { InformacionServicioModalComponent } from '../informacion-servicio-modal/informacion-servicio-modal.component';
 
 @Component({
   selector: 'app-registro-vehiculos',
@@ -9,21 +13,74 @@ import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 export class RegistroVehiculosComponent implements OnInit {
   formConsulta: FormGroup;
   cargando: boolean;
+  columnasGrid: number;
+  serviciosActivos: ServicioParqueo[];
 
-  constructor(private fb: FormBuilder) {
+  constructor(
+    private fb: FormBuilder,
+    private vigilanteService: VigilanteService,
+    private dialogService: MatDialog) {
     this.crearForm();
   }
 
   ngOnInit() {
+    this.consultarEstadoParqueadero();
   }
 
-  consultar () {
+  consultarEstadoParqueadero() {
+    this.cargando = true;
+    this.vigilanteService.consultarEstado().subscribe(listaServicios => {
+      console.log(listaServicios);
+      this.serviciosActivos = listaServicios;
+      this.cargando = false;
+    });
+  }
 
+  consultar() {
+    const placa = this.formConsulta.get('placa').value;
+    this.formConsulta.get('placa').setValue('');
+    this.cargando = true;
+    this.vigilanteService.consultarServicio (placa).subscribe( servicioParqueo => {
+      this.cargando = false;
+      this.mostrarInformacionServicio(servicioParqueo);
+    });
+  }
+  mostrarInformacionServicio(servicioParqueo: ServicioParqueo) {
+    this.dialogService.open(InformacionServicioModalComponent, {
+      maxWidth: '100vw',
+      minWidth: '400px',
+      data: servicioParqueo
+    });
   }
 
   crearForm() {
     this.formConsulta = this.fb.group({
-      placa: ['', Validators.required]
+      placa: ['', [Validators.required, Validators.pattern('[A-Za-z0-9ñÑ]+')]]
     });
   }
+
+  get estaBotonDesabilitado(): boolean {
+    return  this.cargando || !this.formConsulta.get('placa').valid;
+  }
+
+  get numeroCarros(): number {
+    let numero = 0;
+    this.serviciosActivos.forEach(servicio => {
+      if (servicio.vehiculo.tipo === 'Carro') {
+        numero++;
+      }
+    });
+    return numero;
+  }
+
+  get numeroMotos(): number {
+    let numero = 0;
+    this.serviciosActivos.forEach(servicio => {
+      if (servicio.vehiculo.tipo === 'Moto') {
+        numero++;
+      }
+    });
+    return numero;
+  }
+
 }

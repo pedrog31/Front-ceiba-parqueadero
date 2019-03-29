@@ -1,10 +1,37 @@
 <mat-progress-bar *ngIf="cargando" color="accent" mode="query"> </mat-progress-bar>
-
-<form class="mat-form row center-sm" (submit)="consultar()">
+<form class="mat-form row center-sm" [formGroup]="formConsulta" (submit)="consultar()">
 
   <mat-form-field class="col-xs-12 col-sm-10">
-    <input matInput type="text" placeholder="Placa vehiculo">
+    <input matInput type="text" placeholder="Placa vehiculo" formControlName="placa" oninput="this.value = this.value.toUpperCase()">
   </mat-form-field>
 
-  <button class="col-xs-12 col-sm-10" mat-raised-button color="primary" type="submit" [disabled]="cargando">Buscar</button>
+  <button class="col-xs-12 col-sm-8" mat-raised-button color="primary" type="submit" [disabled]="estaBotonDesabilitado">Buscar</button>
 </form>
+<div class="row center-xs middle-xs">
+    <div class="col-sm-3 col-xs-6">
+        <button mat-icon-button color="primary" [disabled]="cargando" (click)="consultarEstadoParqueadero()">
+            <mat-icon>refresh</mat-icon>
+        </button>
+    </div>
+    <div class="col-sm-3 col-xs-6">
+        <mat-label>Total vehiculos: {{serviciosActivos.length}}</mat-label>
+    </div>
+    <div class="col-sm-3 col-xs-6">
+        <mat-label>Total carros: {{numeroCarros}}</mat-label>
+    </div>
+    <div class="col-sm-3 col-xs-6">
+        <mat-label>Total motos: {{numeroMotos}}</mat-label>
+    </div>
+</div>
+<cdk-virtual-scroll-viewport class="row start-xs middle-xs" style="height: 400px" itemSize="30" >
+  <mat-card class="col-xs-12 col-sm-8 col-md-6 col-lg-4 mat-card-custom" *cdkVirtualFor="let servicioParqueo of serviciosActivos" >
+    <span>
+      <mat-label class="mat-label">Tipo vehiculo</mat-label>
+      <mat-label class="mat-value">{{servicioParqueo.vehiculo.tipo}}</mat-label>
+    </span>
+    <span>
+      <mat-label class="mat-label">Placa</mat-label>
+      <mat-label class="mat-value">{{servicioParqueo.vehiculo.placa}}</mat-label>
+    </span>
+  </mat-card>
+</cdk-virtual-scroll-viewport>

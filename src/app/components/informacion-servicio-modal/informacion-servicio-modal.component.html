@@ -1,0 +1,47 @@
+<mat-progress-bar  *ngIf="cargando" color="accent" mode="query"> </mat-progress-bar>
+<h1 mat-dialog-title>Informacion del servicio</h1>
+<mat-grid-list style="min-height: 500px;" mat-dialog-content [cols]="columnasGrid" rowHeight="fit" (window:resize) = "onResize($event.target.innerWidth)">
+    <mat-grid-tile class="my-grid-tile" [colspan]="columnasGrid/2">
+      <span class="mat-item">
+        <mat-label class="mat-label">Placa</mat-label>
+        <mat-label class="mat-value">{{servicioParqueo.vehiculo.placa}}</mat-label>
+      </span>
+    </mat-grid-tile>
+    <mat-grid-tile class="my-grid-tile" [colspan]="columnasGrid/2">
+      <span class="mat-item">
+        <label id="radio-button-tipo-vehiculo" class="mat-label">Tipo</label>
+        <mat-radio-group [disabled]="servicioParqueo.fechaIngreso" aria-labelledby="radio-button-tipo-vehiculo" class="mat-value" [(ngModel)]="servicioParqueo.vehiculo.tipo">
+          <mat-radio-button class="mat-value" *ngFor="let tipoVehiculo of tiposVehiculo" [value]="tipoVehiculo">
+            {{tipoVehiculo}}
+          </mat-radio-button>
+        </mat-radio-group>
+      </span>
+    </mat-grid-tile>
+    <mat-grid-tile class="my-grid-tile" [colspan]="columnasGrid">
+      <mat-form-field class="mat-item">
+        <input matInput type="number" placeholder="Cilindraje" [(ngModel)]="servicioParqueo.vehiculo.cilindraje" [disabled]="servicioParqueo.fechaIngreso">
+        <mat-error *ngIf="">Campo requerido</mat-error>
+      </mat-form-field>
+    </mat-grid-tile>
+    <mat-grid-tile class="my-grid-tile" [colspan]="columnasGrid/2" *ngIf="servicioParqueo.fechaIngreso">
+      <span class="mat-item">
+        <mat-label class="mat-label">Fecha ingreso</mat-label>
+        <mat-label class="mat-value">{{servicioParqueo.fechaIngreso | date :  "dd-MM-yy h:mm a"}}</mat-label>
+      </span>
+    </mat-grid-tile>
+    <mat-grid-tile class="my-grid-tile" [colspan]="columnasGrid/2" *ngIf="servicioParqueo.fechaSalida">
+      <span class="mat-item">
+        <mat-label class="mat-label">Fecha salida</mat-label>
+        <mat-label class="mat-value">{{servicioParqueo.fechaSalida | date :  "dd-MM-yy h:mm a"}}</mat-label>
+      </span>
+    </mat-grid-tile>
+    <mat-grid-tile class="my-grid-tile" [colspan]="columnasGrid" *ngIf="servicioParqueo.valor">
+        <mat-label class="mat-label-title">Total a pagar</mat-label>
+        <mat-label class="mat-value">$ {{servicioParqueo.valor}}</mat-label>
+    </mat-grid-tile>
+</mat-grid-list>
+<div mat-dialog-actions align="end">
+  <button mat-button *ngIf="!servicioParqueo.fechaSalida" [disabled]="!servicioParqueo.vehiculo.tipo || cargando" (click)="registrarIngreso()">Registrar ingreso</button>
+  <button mat-button *ngIf="servicioParqueo.valor" [disabled]="cargando" (click)="registrarPago()">Registrar pago</button>
+  <button mat-button color="warn">Cancelar</button>
+</div>

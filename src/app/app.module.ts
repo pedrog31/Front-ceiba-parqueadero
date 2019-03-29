@@ -9,13 +9,17 @@ import { AppMaterialModule } from './app-material.module';
 import { HeaderComponent } from './components/header/header.component';
 import { FooterComponent } from './components/footer/footer.component';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
+import { HttpClientModule } from '@angular/common/http';
+import { InformacionServicioModalComponent } from './components/informacion-servicio-modal/informacion-servicio-modal.component';
+import { ScrollingModule } from '@angular/cdk/scrolling';
 
 @NgModule({
   declarations: [
     AppComponent,
     RegistroVehiculosComponent,
     HeaderComponent,
-    FooterComponent
+    FooterComponent,
+    InformacionServicioModalComponent
   ],
   imports: [
     FormsModule,
@@ -23,7 +27,9 @@ import { FormsModule, ReactiveFormsModule } from '@angular/forms';
     BrowserModule,
     AppRoutingModule,
     AppMaterialModule,
-    BrowserAnimationsModule
+    BrowserAnimationsModule,
+    HttpClientModule,
+    ScrollingModule,
   ],
   providers: [],
   bootstrap: [AppComponent]
