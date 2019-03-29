@@ -1,37 +1,102 @@
-<mat-progress-bar *ngIf="cargando" color="accent" mode="query"> </mat-progress-bar>
-<form class="mat-form row center-sm" [formGroup]="formConsulta" (submit)="consultar()">
-
+<mat-progress-bar *ngIf="cargando" color="accent" mode="query">
+</mat-progress-bar>
+<form
+  class="mat-form row center-sm"
+  [formGroup]="formConsulta"
+  (submit)="consultar()"
+>
   <mat-form-field class="col-xs-12 col-sm-10">
-    <input matInput type="text" placeholder="Placa vehiculo" formControlName="placa" oninput="this.value = this.value.toUpperCase()">
+    <input
+      matInput
+      type="text"
+      placeholder="Placa vehiculo"
+      formControlName="placa"
+      oninput="this.value = this.value.toUpperCase()"
+    />
   </mat-form-field>
 
-  <button class="col-xs-12 col-sm-8" mat-raised-button color="primary" type="submit" [disabled]="estaBotonDesabilitado">Buscar</button>
+  <button
+    class="col-xs-12 col-sm-8"
+    mat-raised-button
+    color="primary"
+    type="submit"
+    [disabled]="estaBotonDesabilitado"
+  >
+    Buscar
+  </button>
 </form>
 <div class="row center-xs middle-xs">
-    <div class="col-sm-3 col-xs-6">
-        <button mat-icon-button color="primary" [disabled]="cargando" (click)="consultarEstadoParqueadero()">
-            <mat-icon>refresh</mat-icon>
-        </button>
-    </div>
-    <div class="col-sm-3 col-xs-6">
-        <mat-label>Total vehiculos: {{serviciosActivos.length}}</mat-label>
-    </div>
-    <div class="col-sm-3 col-xs-6">
-        <mat-label>Total carros: {{numeroCarros}}</mat-label>
-    </div>
-    <div class="col-sm-3 col-xs-6">
-        <mat-label>Total motos: {{numeroMotos}}</mat-label>
-    </div>
+  <div class="col-sm-3 col-xs-6">
+    <button
+      mat-icon-button
+      color="primary"
+      [disabled]="cargando"
+      (click)="consultarEstadoParqueadero()"
+    >
+      <mat-icon>refresh</mat-icon>
+    </button>
+  </div>
+  <div class="col-sm-3 col-xs-6">
+    <mat-label>Total vehiculos: {{ serviciosActivos.length }}</mat-label>
+  </div>
+  <div class="col-sm-3 col-xs-6">
+    <mat-label>Total carros: {{ numeroCarros }}</mat-label>
+  </div>
+  <div class="col-sm-3 col-xs-6">
+    <mat-label>Total motos: {{ numeroMotos }}</mat-label>
+  </div>
 </div>
-<cdk-virtual-scroll-viewport class="row start-xs middle-xs" style="height: 400px" itemSize="30" >
-  <mat-card class="col-xs-12 col-sm-8 col-md-6 col-lg-4 mat-card-custom" *cdkVirtualFor="let servicioParqueo of serviciosActivos" >
-    <span>
-      <mat-label class="mat-label">Tipo vehiculo</mat-label>
-      <mat-label class="mat-value">{{servicioParqueo.vehiculo.tipo}}</mat-label>
-    </span>
-    <span>
-      <mat-label class="mat-label">Placa</mat-label>
-      <mat-label class="mat-value">{{servicioParqueo.vehiculo.placa}}</mat-label>
-    </span>
-  </mat-card>
-</cdk-virtual-scroll-viewport>
+<div class="row center-xs">
+  <span class="col-xs-6">
+    <h2>Listado vehiculos</h2>
+    <cdk-virtual-scroll-viewport style="height: 200px;" itemSize="30">
+      <mat-card
+        class="col-xs-12 mat-card-custom"
+        *cdkVirtualFor="let servicioParqueo of serviciosActivos"
+      >
+        <span>
+          <mat-label class="mat-label">Tipo vehiculo</mat-label>
+          <mat-label class="mat-value">{{
+            servicioParqueo.vehiculo.tipo
+          }}</mat-label>
+        </span>
+        <span>
+          <mat-label class="mat-label">Placa</mat-label>
+          <mat-label class="mat-value">{{
+            servicioParqueo.vehiculo.placa
+          }}</mat-label>
+        </span>
+      </mat-card>
+    </cdk-virtual-scroll-viewport>
+  </span>
+  <span class="col-xs-6">
+    <h2>Tasa representativa mercado</h2>
+    <mat-card class="row start-xs">
+      <span class="col-xs-6">
+        <span class="box">
+          <mat-label class="mat-label">Valor</mat-label>
+          <mat-label class="mat-value"
+            >{{ tasaRepresentativaMercado.moneda }}
+            {{ tasaRepresentativaMercado.valor }}</mat-label
+          >
+        </span>
+      </span>
+      <span class="col-xs-6">
+        <span class="box">
+          <mat-label class="mat-label">Valido desde</mat-label>
+          <mat-label class="mat-value">{{
+            tasaRepresentativaMercado.validoDesde | date: "dd-MM-yy h:mm a"
+          }}</mat-label>
+        </span>
+      </span>
+      <span class="col-xs-6">
+        <span class="box">
+          <mat-label class="mat-label">Valido hasta</mat-label>
+          <mat-label class="mat-value">{{
+            tasaRepresentativaMercado.validoHasta | date: "dd-MM-yy h:mm a"
+          }}</mat-label>
+        </span>
+      </span>
+    </mat-card>
+  </span>
+</div>

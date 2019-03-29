@@ -4,6 +4,7 @@ import { API_URL, VIGILANTE_ENDPOINT } from 'src/constantes';
 import { Observable } from 'rxjs';
 import { ServicioParqueo } from 'src/app/modelo/ServicioParqueo';
 import { Vehiculo } from 'src/app/modelo/Vehiculo';
+import { TasaRepresentativaMercado } from 'src/app/modelo/TasaRepresentativaMercado';
 
 @Injectable({
   providedIn: 'root'
@@ -31,5 +32,10 @@ export class VigilanteService {
   consultarEstado(): Observable<ServicioParqueo[]> {
     const url = `${API_URL}${VIGILANTE_ENDPOINT}estado`;
     return this.http.get<ServicioParqueo[]>(url).pipe();
+  }
+
+  consultarTasa(): Observable<TasaRepresentativaMercado> {
+    const url = `${API_URL}${VIGILANTE_ENDPOINT}trm`;
+    return this.http.get<TasaRepresentativaMercado>(url).pipe();
   }
 }

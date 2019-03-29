@@ -4,6 +4,7 @@ import { VigilanteService } from 'src/app/services/vigilante/vigilante.service';
 import { ServicioParqueo } from 'src/app/modelo/ServicioParqueo';
 import {MatDialog} from '@angular/material';
 import { InformacionServicioModalComponent } from '../informacion-servicio-modal/informacion-servicio-modal.component';
+import { TasaRepresentativaMercado } from 'src/app/modelo/TasaRepresentativaMercado';
 
 @Component({
   selector: 'app-registro-vehiculos',
@@ -15,6 +16,7 @@ export class RegistroVehiculosComponent implements OnInit {
   cargando: boolean;
   columnasGrid: number;
   serviciosActivos: ServicioParqueo[];
+  tasaRepresentativaMercado: TasaRepresentativaMercado;
 
   constructor(
     private fb: FormBuilder,
@@ -25,6 +27,7 @@ export class RegistroVehiculosComponent implements OnInit {
 
   ngOnInit() {
     this.consultarEstadoParqueadero();
+    this.consultarTasaRepresentativaMercado();
   }
 
   consultarEstadoParqueadero() {
@@ -32,6 +35,15 @@ export class RegistroVehiculosComponent implements OnInit {
     this.vigilanteService.consultarEstado().subscribe(listaServicios => {
       console.log(listaServicios);
       this.serviciosActivos = listaServicios;
+      this.cargando = false;
+    });
+  }
+
+  consultarTasaRepresentativaMercado() {
+    this.cargando = true;
+    this.vigilanteService.consultarTasa().subscribe(tasaRepresentativaMercado => {
+      console.log(tasaRepresentativaMercado);
+      this.tasaRepresentativaMercado = tasaRepresentativaMercado;
       this.cargando = false;
     });
   }
