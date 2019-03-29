@@ -42,7 +42,6 @@ export class RegistroVehiculosComponent implements OnInit {
   consultarTasaRepresentativaMercado() {
     this.cargando = true;
     this.vigilanteService.consultarTasa().subscribe(tasaRepresentativaMercado => {
-      console.log(tasaRepresentativaMercado);
       this.tasaRepresentativaMercado = tasaRepresentativaMercado;
       this.cargando = false;
     });
@@ -58,10 +57,14 @@ export class RegistroVehiculosComponent implements OnInit {
     });
   }
   mostrarInformacionServicio(servicioParqueo: ServicioParqueo) {
-    this.dialogService.open(InformacionServicioModalComponent, {
+    const dialogRef = this.dialogService.open(InformacionServicioModalComponent, {
       maxWidth: '100vw',
       minWidth: '400px',
       data: servicioParqueo
+    });
+    dialogRef.afterClosed().subscribe(() => {
+      this.formConsulta.reset();
+      this.formConsulta.get('placa').setValidators([Validators.required, Validators.pattern('[A-Za-z0-9ñÑ]+')]);
     });
   }
 

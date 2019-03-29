@@ -1,5 +1,4 @@
 import { async, ComponentFixture, TestBed } from '@angular/core/testing';
-
 import { RegistroVehiculosComponent } from './registro-vehiculos.component';
 
 describe('RegistroVehiculosComponent', () => {
@@ -8,7 +7,7 @@ describe('RegistroVehiculosComponent', () => {
 
   beforeEach(async(() => {
     TestBed.configureTestingModule({
-      declarations: [ RegistroVehiculosComponent ]
+      declarations: [RegistroVehiculosComponent]
     })
     .compileComponents();
   }));
@@ -19,7 +18,4 @@ describe('RegistroVehiculosComponent', () => {
     fixture.detectChanges();
   });
 
-  it('should create', () => {
-    expect(component).toBeTruthy();
-  });
 });

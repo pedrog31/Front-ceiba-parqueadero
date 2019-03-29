@@ -41,7 +41,7 @@
     </mat-grid-tile>
 </mat-grid-list>
 <div mat-dialog-actions align="end">
-  <button mat-button *ngIf="!servicioParqueo.fechaSalida" [disabled]="!servicioParqueo.vehiculo.tipo || cargando" (click)="registrarIngreso()">Registrar ingreso</button>
+  <button mat-button *ngIf="!servicioParqueo.fechaSalida" [disabled]="isRegistroIngresoBotonDesabilitado()" (click)="registrarIngreso()">Registrar ingreso</button>
   <button mat-button *ngIf="servicioParqueo.valor" [disabled]="cargando" (click)="registrarPago()">Registrar pago</button>
-  <button mat-button color="warn">Cancelar</button>
+  <button mat-button color="warn" (click)="cerrarDialog()">Cancelar</button>
 </div>
