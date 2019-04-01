@@ -65,4 +65,10 @@ describe('RegistroVehiculosComponent', () => {
       expect(componente.tasaRepresentativaMercado).toEqual(trm);
     });
   });
+
+  it('should show trm in card', () => {
+    componente.ngOnInit();
+    const bannerElement: HTMLElement = fixture.nativeElement;
+    expect(bannerElement.textContent).toContain('COP 3174.79');
+  });
 });
