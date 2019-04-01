@@ -12,6 +12,7 @@ import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { HttpClientModule } from '@angular/common/http';
 import { InformacionServicioModalComponent } from './components/informacion-servicio-modal/informacion-servicio-modal.component';
 import { ScrollingModule } from '@angular/cdk/scrolling';
+import { OverlayModule } from '@angular/cdk/overlay';
 
 @NgModule({
   declarations: [
@@ -22,6 +23,7 @@ import { ScrollingModule } from '@angular/cdk/scrolling';
     InformacionServicioModalComponent
   ],
   imports: [
+    OverlayModule,
     FormsModule,
     ReactiveFormsModule,
     BrowserModule,

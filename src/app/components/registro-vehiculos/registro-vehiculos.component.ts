@@ -33,7 +33,6 @@ export class RegistroVehiculosComponent implements OnInit {
   consultarEstadoParqueadero() {
     this.cargando = true;
     this.vigilanteService.consultarEstado().subscribe(listaServicios => {
-      console.log(listaServicios);
       this.serviciosActivos = listaServicios;
       this.cargando = false;
     });
@@ -63,8 +62,7 @@ export class RegistroVehiculosComponent implements OnInit {
       data: servicioParqueo
     });
     dialogRef.afterClosed().subscribe(() => {
-      this.formConsulta.reset();
-      this.formConsulta.get('placa').setValidators([Validators.required, Validators.pattern('[A-Za-z0-9ñÑ]+')]);
+      this.consultarEstadoParqueadero();
     });
   }
 
