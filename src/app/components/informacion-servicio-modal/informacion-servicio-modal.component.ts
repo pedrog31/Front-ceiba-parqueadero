@@ -42,14 +42,11 @@ export class InformacionServicioModalComponent implements OnInit {
           }
         },
         error => {
-          const mensaje = `Error con ingreso de ${
+          const mensaje = `Error ingresando ${
             this.servicioParqueo.vehiculo.tipo
           }
        con placa ${this.servicioParqueo.vehiculo.placa}, ${error.error}`;
-          this.snackBar.open(mensaje, null, {
-            duration: 5000
-          });
-          console.error(error);
+          this.snackBar.open(mensaje);
           this.dialogRef.close();
           this.cambiarCargando();
         }
