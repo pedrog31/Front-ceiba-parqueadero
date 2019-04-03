@@ -7,7 +7,6 @@ import { RegistroVehiculosComponent } from './components/registro-vehiculos/regi
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { AppMaterialModule } from './app-material.module';
 import { HeaderComponent } from './components/header/header.component';
-import { FooterComponent } from './components/footer/footer.component';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { HttpClientModule } from '@angular/common/http';
 import { InformacionServicioModalComponent } from './components/informacion-servicio-modal/informacion-servicio-modal.component';
@@ -19,7 +18,6 @@ import { OverlayModule } from '@angular/cdk/overlay';
     AppComponent,
     RegistroVehiculosComponent,
     HeaderComponent,
-    FooterComponent,
     InformacionServicioModalComponent
   ],
   imports: [

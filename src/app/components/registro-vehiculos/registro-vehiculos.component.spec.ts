@@ -9,12 +9,15 @@ import {
   MatIconModule,
   MatCardModule,
   MatDialogModule,
+  MatInputModule,
 } from '@angular/material';
 import { of, Observable } from 'rxjs';
 import { ReactiveFormsModule, FormsModule } from '@angular/forms';
 import { ScrollingModule } from '@angular/cdk/scrolling';
 import { HttpClientModule } from '@angular/common/http';
 import { VigilanteService } from 'src/app/services/vigilante/vigilante.service';
+import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
+import { By } from '@angular/platform-browser';
 
 class MockVigilanteService {
   consultarTasa(): Observable<TasaRepresentativaMercado> {
@@ -26,7 +29,7 @@ class MockVigilanteService {
   }
 
   consultarServicio(placa: string) {
-    return of(new ServicioParqueo(new Date(), new Date(), true, 4500, new Vehiculo(placa, 'Moto', 25)));
+    return of(new ServicioParqueo(new Date(), new Date(), false, 4500, new Vehiculo(placa, 'Moto', 25)));
   }
 }
 
@@ -46,6 +49,8 @@ describe('RegistroVehiculosComponent', () => {
         ReactiveFormsModule,
         MatFormFieldModule,
         MatDialogModule,
+        MatInputModule,
+        BrowserAnimationsModule,
         MatIconModule],
       declarations: [ RegistroVehiculosComponent ],
       providers:    [ {provide: VigilanteService, useClass: MockVigilanteService } ]
@@ -53,22 +58,34 @@ describe('RegistroVehiculosComponent', () => {
 
     fixture = TestBed.createComponent(RegistroVehiculosComponent);
     componente = fixture.componentInstance;
+    fixture.detectChanges();
   });
 
-  it('should create', () => {
+  it('deberia poderse crear el componente', () => {
     expect(componente).toBeDefined();
   });
 
-  it('should show trm', () => {
+  it('deberia poderse mostrar trm', () => {
     componente.ngOnInit();
     mockVigilanteService.consultarTasa().subscribe(trm => {
       expect(componente.tasaRepresentativaMercado).toEqual(trm);
     });
   });
 
-  it('should show trm in card', () => {
-    componente.ngOnInit();
+  it('deberia poderse mostrar trm en el card', () => {
     const bannerElement: HTMLElement = fixture.nativeElement;
-    expect(bannerElement.textContent).toContain('COP 3174.79');
+    expect(bannerElement.textContent).toContain('COP 4500');
+  });
+
+  it('deberia poderse escribir en el input y obtener el valor de la placa', () => {
+    const placa = 'USN78E';
+    const inputPlaca = fixture.debugElement.query(By.css('input[formControlName=placa]')).nativeElement;
+    inputPlaca.value = placa;
+    inputPlaca.dispatchEvent(new Event('input'));
+    const buttonSubmit = fixture.debugElement.query(By.css('form'));
+    buttonSubmit.triggerEventHandler('ngSubmit', null);
+    fixture.whenStable().then(() => {
+      expect(placa).toEqual(componente.formConsulta.get('placa').value);
+    });
   });
 });

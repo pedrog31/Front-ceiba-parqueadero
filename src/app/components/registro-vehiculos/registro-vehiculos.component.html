@@ -25,7 +25,7 @@
     Buscar
   </button>
 </form>
-<div class="row center-xs middle-xs">
+<div class="row center-xs middle-xs" *ngIf="serviciosActivos">
   <div class="col-sm-3 col-xs-6">
     <button
       mat-icon-button
@@ -47,29 +47,7 @@
   </div>
 </div>
 <div class="row center-xs">
-  <span class="col-xs-6">
-    <h2>Listado vehiculos</h2>
-    <cdk-virtual-scroll-viewport style="height: 200px;" itemSize="30">
-      <mat-card
-        class="col-xs-12 mat-card-custom"
-        *cdkVirtualFor="let servicioParqueo of serviciosActivos"
-      >
-        <span>
-          <mat-label class="mat-label">Tipo vehiculo</mat-label>
-          <mat-label class="mat-value">{{
-            servicioParqueo.vehiculo.tipo
-          }}</mat-label>
-        </span>
-        <span>
-          <mat-label class="mat-label">Placa</mat-label>
-          <mat-label class="mat-value">{{
-            servicioParqueo.vehiculo.placa
-          }}</mat-label>
-        </span>
-      </mat-card>
-    </cdk-virtual-scroll-viewport>
-  </span>
-  <span class="col-xs-6">
+  <span class="col-xs-12 col-sm-6"  *ngIf="tasaRepresentativaMercado">
     <h2>Tasa representativa mercado</h2>
     <mat-card class="row start-xs">
       <span class="col-xs-6">
@@ -98,5 +76,27 @@
         </span>
       </span>
     </mat-card>
+  </span>
+  <span class="col-xs-12  col-sm-6" *ngIf="serviciosActivos">
+    <h2>Listado vehiculos</h2>
+    <cdk-virtual-scroll-viewport style="height: 400px;" itemSize="30">
+      <mat-card
+        class="col-xs-12 mat-card-custom"
+        *cdkVirtualFor="let servicioParqueo of serviciosActivos"
+      >
+        <span>
+          <mat-label class="mat-label">Tipo vehiculo</mat-label>
+          <mat-label class="mat-value">{{
+            servicioParqueo.vehiculo.tipo
+          }}</mat-label>
+        </span>
+        <span>
+          <mat-label class="mat-label">Placa</mat-label>
+          <mat-label class="mat-value">{{
+            servicioParqueo.vehiculo.placa
+          }}</mat-label>
+        </span>
+      </mat-card>
+    </cdk-virtual-scroll-viewport>
   </span>
 </div>
